@@ -1,52 +1,22 @@
-// api/sms-history/[id].js
-export const config = { runtime: 'edge' };
 import { neon } from '@neondatabase/serverless';
-const sql = neon(process.env.DATABASE_URL || '');
+import { isAuthorized } from '../_auth.js';
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
-const ok  = (data, status=200) => new Response(JSON.stringify(data), { status, headers: { 'content-type':'application/json', ...CORS }});
-const err = (status, msg)      => ok({ error: msg }, status);
+export default async function handler(req, res) {
+  if (!isAuthorized(req)) return res.status(401).json({ error: 'Přihlášení vypršelo. Přihlaste se znovu.' });
+  if (!process.env.DATABASE_URL) return res.status(500).json({ error: 'Historie není připojená k databázi.' });
+  if (req.method !== 'DELETE') {
+    res.setHeader('Allow', 'DELETE');
+    return res.status(405).json({ error: 'Nepovolená metoda.' });
+  }
 
-const auth = req => {
-  const h = req.headers.get('authorization') || '';
-  const m = h.match(/^Bearer\s+(.+)/i);
-  return !!(m && m[1] && m[1] === process.env.SMSHIST_TOKEN);
-};
+  const id = Array.isArray(req.query?.id) ? req.query.id[0] : req.query?.id;
+  if (!id) return res.status(400).json({ error: 'Chybí ID záznamu.' });
 
-async function ensureTable(){
-  await sql`
-    CREATE TABLE IF NOT EXISTS sms_history (
-      id TEXT PRIMARY KEY,
-      ts BIGINT NOT NULL,
-      guest TEXT,
-      lang TEXT,
-      to_numbers TEXT,
-      text_body TEXT,
-      link TEXT
-    );
-  `;
-}
-
-export default async function handler(req){
-  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
-  if (!auth(req)) return err(401, 'Unauthorized');
-  await ensureTable();
-
-  if (req.method !== 'DELETE') return err(405, 'Method Not Allowed');
-
-  const url = new URL(req.url);
-  const parts = url.pathname.split('/');
-  const id = parts[parts.length - 1] || '';
-  if (!id) return err(400, 'Missing id');
-
-  try{
+  try {
+    const sql = neon(process.env.DATABASE_URL);
     await sql`DELETE FROM sms_history WHERE id = ${id};`;
-    return ok({ ok: true });
-  }catch(e){
-    return err(500, e.message || String(e));
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || 'Záznam se nepodařilo odstranit.' });
   }
 }

@@ -1,0 +1,18 @@
+<!doctype html><html lang="cs"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Falconi – odstranění majitele</title>
+<style>body{font:17px system-ui;max-width:650px;margin:40px auto;padding:20px;color:#16385c}p{line-height:1.6}button{font:inherit;padding:15px;cursor:pointer}</style>
+<h1>Odstranění čtvrtého majitele</h1>
+<p>Jednorázový schválený příkaz pro odstranění pozice 4 (420777087462 podle výpisu z 19. 9. 2026 22:32). Příjemce: +420602783619. Odesílatel: systémové číslo 999037. Příkaz neotevírá schránky ani nemění přístupové kódy.</p>
+<button id="query">Odstranit schválenou čtvrtou pozici přes API</button><p id="result" role="status"></p><a href="/">Zpět do Messengeru</a>
+<script>
+const button=document.querySelector('#query'),result=document.querySelector('#result');
+button.onclick=async()=>{
+ if(button.disabled)return;
+ button.disabled=true;result.textContent='Odesílám příkaz…';
+ try{
+  const response=await fetch('/api/send-sms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:['+420602783619'],text:'**pin0000*01*ep*4*',historyId:'selax-remove-owner4-20260919-01',guest:'Správa – odstranění majitele na pozici 4'})});
+  const data=await response.json();
+  if(!response.ok||!data.ok)throw new Error(data.error||'Odeslání nebylo potvrzeno.');
+  result.textContent='Příkaz přijat bránou. ID SMS: '+data.results.map(r=>r.sms_id).join(', ')+'. Provedení ověřte v odpovědi schránek v Messengeru.';
+ }catch(error){result.textContent=error.message+' Příkaz neopakujte, nejprve ověřte historii SMSbrány.';}
+};
+</script></html>

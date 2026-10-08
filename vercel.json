@@ -1,0 +1,22 @@
+{
+  "functions": {
+    "api/wallet.js": {
+      "maxDuration": 90
+    },
+    "api/sms-monitor.js": {
+      "maxDuration": 60
+    },
+    "api/send-sms.js": {
+      "maxDuration": 60
+    },
+    "api/night-summary.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/s/:id",
+      "destination": "/api/guest-link?id=:id"
+    }
+  ]
+}
