@@ -131,3 +131,11 @@ test('selected InfoSMS sender and system ID zero are passed explicitly', async (
   assert.equal(calls[0].get('sender_id'), '30514');
   assert.equal(calls[1].get('sender_id'), '0');
 });
+
+
+test('routing module loads through CommonJS used by the deployed handler', async () => {
+  const { createRequire } = await import('node:module');
+  const require = createRequire(import.meta.url);
+  const { routeSms } = require('../lib/sms-routing.cjs');
+  assert.equal(routeSms(locker, { SMS_SYSTEM_SENDER_ID: '0' }).senderId, '0');
+});

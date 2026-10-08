@@ -1,4 +1,4 @@
-import { routeSms } from '../lib/sms-routing.mjs';
+import { routeSms } from '../lib/sms-routing.cjs';
 
 // api/send-sms.js
 
