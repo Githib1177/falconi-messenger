@@ -1,0 +1,230 @@
+{
+  "domain": "falconi-messenger.vercel.app",
+  "projectId": "prj_yiUQvxCmtv5UfHea6v0N8WErWcfG",
+  "projectName": "falconi-messenger",
+  "teamId": "team_CS43ru0uiLzYd40tktKXt3QZ",
+  "deploymentId": "dpl_2NGovkYn3rF4esH5qRm6CPuywNpZ",
+  "sourceCommit": "73a5978295b3307b6e00f2bf4e709b37c2fe55dc",
+  "files": [
+    {
+      "path": "api/_auth.js",
+      "uid": "147048e9e8fa7dee64f95f7f2877b021c75b27ad"
+    },
+    {
+      "path": "api/auth.js",
+      "uid": "0c74df82e6b9666fdcf408e3b06740963089ddde"
+    },
+    {
+      "path": "api/guest-link.js",
+      "uid": "09ecd396c14d9ef31d29cbda9ca854fb9cef35be"
+    },
+    {
+      "path": "api/night-summary.js",
+      "uid": "912d51719476116ada05f9517aad264593132b4d"
+    },
+    {
+      "path": "api/send-sms.js",
+      "uid": "17bb9665b31244e2113a0b2c66f475e944e07b71"
+    },
+    {
+      "path": "api/sms-history/[id].js",
+      "uid": "4ca2f493554c54c8086e8cfd09292f7ecec8dc14"
+    },
+    {
+      "path": "api/sms-history/index.js",
+      "uid": "b31139df01d8de7a8b00bdabd3adbc19ceb79f30"
+    },
+    {
+      "path": "api/sms-monitor.js",
+      "uid": "8dab811955665fb27a14bc4d1027bc183bc9b936"
+    },
+    {
+      "path": "api/wallet-save.js",
+      "uid": "f65c64728d2f9648e749a8c6fe0f7f1fa03cd6f2"
+    },
+    {
+      "path": "api/wallet.js",
+      "uid": "bbcfd29e1c4fd28e88644a405a6aa0cce7ba329e"
+    },
+    {
+      "path": "assets/wallet/README.md",
+      "uid": "97c54712ae73e89a8bb27779f61c6f0a1fc49ab0"
+    },
+    {
+      "path": "assets/wallet/add-cs.svg",
+      "uid": "0a755f3229590f3d33640ae0e609496b51c8c5da"
+    },
+    {
+      "path": "assets/wallet/add-de.svg",
+      "uid": "5f422b6b7e949c08e1f0e9c527c6e80b5bed8476"
+    },
+    {
+      "path": "assets/wallet/add-en.svg",
+      "uid": "90f5fde3a259b5fc76f83b8e0854e551adc656c1"
+    },
+    {
+      "path": "falconi-messenger-180.png",
+      "uid": "205a795ebad1d3638ef2d60a7b4f6de57ae807fc"
+    },
+    {
+      "path": "falconi-messenger-192.png",
+      "uid": "fe4c9d06084d94bf09c4550a67bd3a4db5dbd85c"
+    },
+    {
+      "path": "falconi-messenger-32.png",
+      "uid": "8c64ca1772e652a019b404b41f08a0f69d796bfe"
+    },
+    {
+      "path": "falconi-messenger-512.png",
+      "uid": "99df46b8f713759362999eb3e32d56af8519f125"
+    },
+    {
+      "path": "favicon.ico",
+      "uid": "cc8bd977f3b102b14707566185bc1717e73e33dd"
+    },
+    {
+      "path": "guest-wallet.js",
+      "uid": "7db9d76922ad5b169bb1220eb3e6c1c82a15e070"
+    },
+    {
+      "path": "index.html",
+      "uid": "457d3b95ef9123eeba7abee0ca887171acf7b1aa"
+    },
+    {
+      "path": "integration/previo-wallet.html",
+      "uid": "f7d692b8c05a9588823f9083972b26fc045bb21a"
+    },
+    {
+      "path": "lib/google-wallet.js",
+      "uid": "b1711fdb3ce471f3a2c0b02fe1fb3ca3c4e556dd"
+    },
+    {
+      "path": "lib/night-ai/decision.js",
+      "uid": "71a95e5b727c6eee777997b9893c115baf7f9a3a"
+    },
+    {
+      "path": "lib/night-ai/read-duty.js",
+      "uid": "0a50a9ce47eb84a13fc3292aa2ccd660c72ad3b8"
+    },
+    {
+      "path": "lib/sms-monitor.js",
+      "uid": "fa9ea8f3672d68786468b1b71164e3468add195e"
+    },
+    {
+      "path": "lib/tracked-send.js",
+      "uid": "2b9f5cfb8f35ecd35349956c3b9a8b50f9a1e7ea"
+    },
+    {
+      "path": "lib/vendor/telephony-plan.js",
+      "uid": "162314321a5ef5cdd2d5077d2844aaeace02a287"
+    },
+    {
+      "path": "lib/wallet-guest-token.js",
+      "uid": "f75bec30996db8393e0c7a053b6871f24f338ec0"
+    },
+    {
+      "path": "lib/wallet-pass.js",
+      "uid": "e9ed5f29ea4ce644a89dbffd68a9f299b22abb6d"
+    },
+    {
+      "path": "linkbuilder-180.png",
+      "uid": "48c0c5f4fd7cd991c53120cf64e06f06c415fc20"
+    },
+    {
+      "path": "linkbuilder-192.png",
+      "uid": "1694ca697dae627a6ec08052972798acce694f06"
+    },
+    {
+      "path": "linkbuilder-512.png",
+      "uid": "86c264f367519c973ee2b3f1d09905078ef6d98e"
+    },
+    {
+      "path": "manifest.json",
+      "uid": "b3a549ab9ef56841351f1f36165e50483fc2d56a"
+    },
+    {
+      "path": "monitor.css",
+      "uid": "e2364a00abcccbf8f9399ffb1e1c8d3d0ab45689"
+    },
+    {
+      "path": "monitor.js",
+      "uid": "61b6aa7f0276ac9e252c30f66927a64c3ae89bea"
+    },
+    {
+      "path": "package.json",
+      "uid": "3d017416c493d917586efb1aa78b81b8e9d4bf38"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "uid": "96915f84a8d559723215a22c12313da008927c0b"
+    },
+    {
+      "path": "selax-diagnostic.html",
+      "uid": "d862094edd3cde1e7312123dab06b0e40f53e2c6"
+    },
+    {
+      "path": "selax-owner-remove.html",
+      "uid": "0f3bccb246ff99b08878fa467008d3cc2f2b268d"
+    },
+    {
+      "path": "short-links.js",
+      "uid": "9b32d7354d0a929cd627a505595578f1841cccc3"
+    },
+    {
+      "path": "sw.js",
+      "uid": "9ee3a305df9713dcd7f1d05c6788a1c6f048ae7b"
+    },
+    {
+      "path": "test/monitor.test.mjs",
+      "uid": "4af28afda7f9ad8ea71df8bff3044568e5318d0e"
+    },
+    {
+      "path": "test/night-summary.test.mjs",
+      "uid": "f218f43d5146a166f7cb3b7afccecbc0c9c5c65e"
+    },
+    {
+      "path": "test/selax-diagnostic.test.mjs",
+      "uid": "27b1fc421bac9c5e4e9f17e8303fabfd9850eb7b"
+    },
+    {
+      "path": "test/selax-owner-remove.test.mjs",
+      "uid": "068a939eb1821acdff4d72e3775e87e70a9ca60f"
+    },
+    {
+      "path": "test/short-links.test.mjs",
+      "uid": "31edb190688a13f7a4f266524af5a4a2a65bc8fb"
+    },
+    {
+      "path": "test/ui.test.mjs",
+      "uid": "b63b292c138ff3a38a6230110a73b606656ec8c8"
+    },
+    {
+      "path": "test/wallet-api.test.mjs",
+      "uid": "27c5e6b7f5e2ae074112b07d31a6ec2dad70c0ac"
+    },
+    {
+      "path": "test/wallet-codes.test.mjs",
+      "uid": "815168e5fad1f7a083e5f036ceb21edb047145a1"
+    },
+    {
+      "path": "test/wallet-crossover.test.mjs",
+      "uid": "37c51656044788aaffcfa7f963cb24a577c3dea2"
+    },
+    {
+      "path": "test/wallet-integration.test.mjs",
+      "uid": "bd2afe8741f484dd9ef51ded45a52bbcb514faab"
+    },
+    {
+      "path": "test/wallet-pass.test.mjs",
+      "uid": "d6c3e5dfeaa7f92252c98e05ee873a8387df0fc0"
+    },
+    {
+      "path": "vercel.json",
+      "uid": "917100508a6c58033c91f766aadd36a5bfe4dac4"
+    },
+    {
+      "path": "wallet.js",
+      "uid": "ad89a817751c389a282ee54b3bb95fce358de295"
+    }
+  ]
+}
