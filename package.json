@@ -3,5 +3,8 @@
   "private": true,
   "dependencies": {
     "@neondatabase/serverless": "latest"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
   }
 }

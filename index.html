@@ -671,7 +671,7 @@ Rezeption: +420 721 516 894 | E-Mail: recepce@falconicz`;
         const resp = await fetch('/api/send-sms', {
           method:'POST',
           headers:{ 'Content-Type':'application/json' },
-          body: JSON.stringify({ to: [BOX_DEST], text: cmd })
+          body: JSON.stringify({ type: 'locker', to: [BOX_DEST], text: cmd })
         });
         const data = await resp.json().catch(()=>({}));
         if(!resp.ok || !data.ok){
@@ -733,7 +733,7 @@ Rezeption: +420 721 516 894 | E-Mail: recepce@falconicz`;
         const resp = await fetch('/api/send-sms', {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ to: numbers, text })
+          body: JSON.stringify({ type: 'guest', to: numbers, text })
         });
         const data = await resp.json().catch(()=>({}));
         if(!resp.ok || !data.ok){
@@ -813,7 +813,7 @@ Rezeption: +420 721 516 894 | E-Mail: recepce@falconicz`;
         const resp = await fetch('/api/send-sms', {
           method:'POST',
           headers:{ 'Content-Type':'application/json' },
-          body: JSON.stringify({ to: numbers, text })
+          body: JSON.stringify({ type: 'guest', to: numbers, text })
         });
         const data = await resp.json().catch(()=>({}));
         if(!resp.ok || !data.ok){ throw new Error(data.error || data.detail || 'Chyba při odesílání'); }

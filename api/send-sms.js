@@ -1,3 +1,5 @@
+import { routeSms } from '../lib/sms-routing.mjs';
+
 // api/send-sms.js
 
 // ---------- Pomocné funkce ----------
@@ -52,7 +54,7 @@ async function callGateway({ method, endpoint, query, body }) {
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
   }
 
-  console.log('[send-sms] fetch', { method, endpoint, query: method === 'GET' ? query : undefined, body: method === 'POST' ? body : undefined });
+  console.log('[send-sms] fetch', { method, endpoint });
 
   const r = await fetch(url, {
     method,
@@ -61,14 +63,14 @@ async function callGateway({ method, endpoint, query, body }) {
   });
 
   const raw = await r.text();
-  console.log('[send-sms] response', { status: r.status, raw });
+  console.log('[send-sms] response', { status: r.status });
 
   const parsed = parseXml(raw);
   return { http: r.status, raw, ...parsed, errMessage: parsed.err != null ? (ERR_MAP[parsed.err] || 'Neznámá chyba') : 'Neznámá odpověď' };
 }
 
 // ---------- Odeslání jedné SMS s více strategiemi ----------
-async function sendStrategies({ login, password, number, text }) {
+async function sendStrategies({ login, password, number, text, senderId }) {
   // Připravíme varianty textu
   const plain = String(text).replace(/[\r\n]+/g, ' ').trim();  // bez \n
   const ascii = stripDiacritics(plain);
@@ -90,6 +92,7 @@ async function sendStrategies({ login, password, number, text }) {
         login,
         password,
         number,
+        sender_id: senderId,
         message: ascii,
       },
     });
@@ -106,6 +109,7 @@ async function sendStrategies({ login, password, number, text }) {
         login,
         password,
         number,
+        sender_id: senderId,
         data_code: 'ucs2',
         message: ucs2hex,
       },
@@ -123,6 +127,7 @@ async function sendStrategies({ login, password, number, text }) {
         login,
         password,
         number,
+        sender_id: senderId,
         message: ascii,
       },
     });
@@ -139,6 +144,7 @@ async function sendStrategies({ login, password, number, text }) {
         login,
         password,
         number,
+        sender_id: senderId,
         data_code: 'ucs2',
         message: ucs2hex,
       },
@@ -153,39 +159,29 @@ async function sendStrategies({ login, password, number, text }) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { to, text } = req.body || {};
-  console.log('[send-sms] body:', { to, text });
-
-  if (!text || !String(text).trim()) return res.status(400).json({ ok: false, error: 'Missing text' });
-  if (!to || (Array.isArray(to) && to.length === 0)) return res.status(400).json({ ok: false, error: 'Missing recipient number(s)' });
-
+  let routed;
+  try {
+    routed = routeSms(req.body, process.env);
+  } catch (error) {
+    return res.status(error.status || 500).json({ ok: false, error: error.message });
+  }
+  const { numbers, text, senderId } = routed;
   const LOGIN = process.env.SMS_LOGIN;
   const PASSWORD = process.env.SMS_PASSWORD;
   console.log('[send-sms] env loaded:', { hasLogin: !!LOGIN, hasPass: !!PASSWORD });
   if (!LOGIN || !PASSWORD) return res.status(500).json({ ok: false, error: 'Missing SMS_LOGIN or SMS_PASSWORD env' });
 
-  // Normalizace čísel: ponecháme číslice/+, zahodíme + a whitespace
-  const toList = Array.isArray(to) ? to : String(to).split(/[,\n;]+/);
-  const numbers = toList
-    .map(x => String(x).trim())
-    .filter(Boolean)
-    .map(x => x.replace(/[^\d+]/g, ''))
-    .map(x => x.replace(/^\+/, ''))
-    .filter(x => /^\d{8,15}$/.test(x));
-
-  if (numbers.length === 0) return res.status(400).json({ ok: false, error: 'No valid numbers after normalization' });
-
   try {
     const results = [];
     for (const n of numbers) {
-      const r = await sendStrategies({ login: LOGIN, password: PASSWORD, number: n, text });
-      results.push({ number: n, ...r });
+      const r = await sendStrategies({ login: LOGIN, password: PASSWORD, number: n, text, senderId });
+      results.push({ number: n, err: r.err, sms_id: r.sms_id, errMessage: r.errMessage });
     }
     const ok = results.some(r => r.err === 0);
     return res.status(200).json({ ok, results });
   } catch (e) {
-    console.error('[send-sms] ERROR', e);
-    return res.status(500).json({ ok: false, error: e.message });
+    console.error('[send-sms] gateway request failed');
+    return res.status(500).json({ ok: false, error: 'SMS gateway request failed' });
   }
 }
 
